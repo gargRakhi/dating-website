@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Free Time 💖</title>
+
+
+  <style>
+
+    /* =========================
+       RESET
+    ========================== */
+
+    * {
+
+      margin: 0;
+
+      padding: 0;
+
+      box-sizing: border-box;
+
+    }
+
+
+    /* =========================
+       INITIAL PAGE
+    ========================== */
+
+    body {
+
+      min-height: 100vh;
+
+      overflow: hidden;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      padding: 20px;
+
+      font-family: Arial, sans-serif;
+
+      background: linear-gradient(
+
+        135deg,
+
+        #ffd6e7,
+
+        #fff0f6
+
+      );
+
+    }
+
+
+    /* =========================
+       FIRST CARD
+    ========================== */
+
+    .card {
+
+      width: min(95%, 600px);
+
+      min-height: 400px;
+
+      padding: 70px 45px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      align-items: center;
+
+      text-align: center;
+
+      background-color: white;
+
+      border-radius: 35px;
+
+      box-shadow:
+
+        0 10px 35px
+
+        rgba(
+
+          0,
+
+          0,
+
+          0,
+
+          0.15
+
+        );
+
+      transition:
+
+        opacity 1s ease,
+
+        transform 1s ease;
+
+    }
+
+
+    /* Card Disappearing Animation */
+
+    .card.hide {
+
+      opacity: 0;
+
+      transform: scale(0.7);
+
+      pointer-events: none;
+
+    }
+
+
+    /* =========================
+       HEADING
+    ========================== */
+
+    h1 {
+
+      margin-bottom: 25px;
+
+      color: #ff4f81;
+
+      font-size: clamp(
+
+        28px,
+
+        6vw,
+
+        40px
+
+      );
+
+    }
+
+
+    /* =========================
+       MESSAGE
+    ========================== */
+
+    p {
+
+      color: #555;
+
+      font-size: 20px;
+
+      line-height: 1.7;
+
+    }
+
+
+    /* =========================
+       KISS EMOJI
+    ========================== */
+
+    .kiss {
+
+      margin-top: 25px;
+
+      font-size: 42px;
+
+    }
+
+
+    /* =========================
+       ROMANTIC SCREEN
+    ========================== */
+
+    .romanticScreen {
+
+      position: fixed;
+
+      inset: 0;
+
+      display: none;
+
+      justify-content: center;
+
+      align-items: center;
+
+      overflow: hidden;
+
+      background:
+
+        radial-gradient(
+
+          circle at center,
+
+          #450a0a,
+
+          #1f0202 50%,
+
+          #000000
+
+        );
+
+    }
+
+
+    .romanticScreen.show {
+
+      display: flex;
+
+    }
+
+
+    /* =========================
+       MOVING HEARTS
+    ========================== */
+
+    .heart {
+
+      position: absolute;
+
+      bottom: -80px;
+
+      color: #ff1f1f;
+
+      font-size: 30px;
+
+      opacity: 0.8;
+
+      animation:
+
+        floatHeart
+
+        linear
+
+        infinite;
+
+    }
+
+
+    .heart:nth-child(1) {
+
+      left: 10%;
+
+      animation-duration: 8s;
+
+      animation-delay: 0s;
+
+    }
+
+
+    .heart:nth-child(2) {
+
+      left: 25%;
+
+      font-size: 22px;
+
+      animation-duration: 11s;
+
+      animation-delay: 2s;
+
+    }
+
+
+    .heart:nth-child(3) {
+
+      left: 45%;
+
+      font-size: 38px;
+
+      animation-duration: 9s;
+
+      animation-delay: 1s;
+
+    }
+
+
+    .heart:nth-child(4) {
+
+      left: 65%;
+
+      font-size: 24px;
+
+      animation-duration: 12s;
+
+      animation-delay: 3s;
+
+    }
+
+
+    .heart:nth-child(5) {
+
+      left: 85%;
+
+      font-size: 34px;
+
+      animation-duration: 10s;
+
+      animation-delay: 1s;
+
+    }
+
+
+    @keyframes floatHeart {
+
+      0% {
+
+        transform:
+
+          translateY(0)
+
+          rotate(0deg)
+
+          scale(1);
+
+        opacity: 0;
+
+      }
+
+
+      20% {
+
+        opacity: 1;
+
+      }
+
+
+      50% {
+
+        transform:
+
+          translateY(-50vh)
+
+          rotate(180deg)
+
+          scale(1.3);
+
+      }
+
+
+      100% {
+
+        transform:
+
+          translateY(-115vh)
+
+          rotate(360deg)
+
+          scale(0.8);
+
+        opacity: 0;
+
+      }
+
+    }
+
+
+    /* =========================
+       CENTER KISS
+    ========================== */
+
+    .hotKiss {
+
+      position: relative;
+
+      z-index: 2;
+
+      font-size: 150px;
+
+      filter:
+
+        drop-shadow(
+
+          0 0 25px
+
+          #ff0000
+
+        );
+
+      animation:
+
+        kissBeat
+
+        1.5s
+
+        ease-in-out
+
+        infinite;
+
+    }
+
+
+    @keyframes kissBeat {
+
+      0%,
+
+      100% {
+
+        transform:
+
+          scale(1);
+
+      }
+
+
+      50% {
+
+        transform:
+
+          scale(1.2);
+
+      }
+
+    }
+
+
+    /* =========================
+       RESPONSIVE DESIGN
+    ========================== */
+
+    @media (max-width: 480px) {
+
+      .card {
+
+        width: 100%;
+
+        min-height: 350px;
+
+        padding: 50px 25px;
+
+      }
+
+
+      h1 {
+
+        font-size: 30px;
+
+      }
+
+
+      p {
+
+        font-size: 17px;
+
+      }
+
+
+      .hotKiss {
+
+        font-size: 110px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       INITIAL CARD
+  ========================== -->
+
+  <div
+
+    class="card"
+
+    id="mainCard"
+
+  >
+
+
+    <h1>
+
+      Jab free ho batana 💖
+
+    </h1>
+
+
+    <p>
+
+      Aur WhatsApp par saari details de dena 😊
+
+    </p>
+
+
+    <div class="kiss">
+
+      😘💋
+
+    </div>
+
+
+  </div>
+
+
+  <!-- =========================
+       ROMANTIC SCREEN
+  ========================== -->
+
+  <div
+
+    class="romanticScreen"
+
+    id="romanticScreen"
+
+  >
+
+
+    <!-- Moving Hearts -->
+
+    <span class="heart">
+
+      ❤️
+
+    </span>
+
+
+    <span class="heart">
+
+      ❤️
+
+    </span>
+
+
+    <span class="heart">
+
+      ❤️
+
+    </span>
+
+
+    <span class="heart">
+
+      ❤️
+
+    </span>
+
+
+    <span class="heart">
+
+      ❤️
+
+    </span>
+
+
+    <!-- Center Red Kiss -->
+
+    <div class="hotKiss">
+
+      💋
+
+    </div>
+
+
+  </div>
+
+
+  <script>
+
+
+    /* =========================
+       SELECT ELEMENTS
+    ========================== */
+
+    const mainCard =
+
+      document.getElementById(
+
+        "mainCard"
+
+      );
+
+
+    const romanticScreen =
+
+      document.getElementById(
+
+        "romanticScreen"
+
+      );
+
+
+    /* =========================
+       AFTER 3 SECONDS
+    ========================== */
+
+    setTimeout(
+
+      () => {
+
+
+        /*
+
+          Hide the first card
+
+        */
+
+        mainCard.classList.add(
+
+          "hide"
+
+        );
+
+
+        /*
+
+          Wait for fade-out animation
+
+        */
+
+        setTimeout(
+
+          () => {
+
+
+            mainCard.style.display =
+
+              "none";
+
+
+            /*
+
+              Show romantic screen
+
+            */
+
+            romanticScreen.classList.add(
+
+              "show"
+
+            );
+
+
+          },
+
+          1000
+
+        );
+
+      },
+
+      800
+
+    );
+
+  </script>
+
+
+</body>
+
+</html>

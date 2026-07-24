@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Special Question 💖</title>
+
+  <style>
+    /* =========================
+       RESET
+    ========================== */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+
+    /* =========================
+       PAGE
+    ========================== */
+
+    body {
+      min-height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: linear-gradient(
+        135deg,
+        #ffd6e7,
+        #fff0f6
+      );
+
+      font-family: Arial, sans-serif;
+
+      overflow: hidden;
+    }
+
+
+    /* =========================
+       MAIN CARD
+    ========================== */
+
+    .card {
+      position: relative;
+
+      width: min(92%, 520px);
+      min-height: 600px;
+
+      padding: 40px 30px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+
+      background-color: white;
+
+      border-radius: 25px;
+
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+
+    /* =========================
+       PUPPY IMAGE
+    ========================== */
+
+    .card img {
+      width: 250px;
+      height: 250px;
+
+      object-fit: cover;
+
+      border-radius: 20px;
+
+      margin-bottom: 30px;
+    }
+
+
+    /* =========================
+       QUESTION
+    ========================== */
+
+    h1 {
+      margin-bottom: 35px;
+
+      color: #ff4f81;
+
+      font-size: clamp(24px, 6vw, 36px);
+    }
+
+
+    /* =========================
+       BUTTONS CONTAINER
+    ========================== */
+
+    .buttons {
+      position: relative;
+
+      width: 100%;
+      height: 100px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    /* =========================
+       COMMON BUTTON STYLE
+    ========================== */
+
+    button {
+      padding: 13px 30px;
+
+      border: none;
+      border-radius: 30px;
+
+      font-size: 18px;
+
+      cursor: pointer;
+
+      transition: 0.2s ease;
+    }
+
+
+    /* =========================
+       YES BUTTON
+    ========================== */
+
+    #yesBtn {
+      margin-right: 170px;
+
+      color: white;
+
+      background-color: #ff4f81;
+    }
+
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+
+      background-color: #ff2f6b;
+    }
+
+
+    /* =========================
+       NO BUTTON
+    ========================== */
+
+    #noBtn {
+      position: absolute;
+
+      top: 50%;
+      left: 60%;
+
+      transform: translate(-50%, -50%);
+
+      color: #333;
+
+      background-color: #ddd;
+    }
+
+
+    /* =========================
+       SUCCESS MESSAGE
+    ========================== */
+
+    .success {
+      display: none;
+
+      margin-top: 30px;
+
+      color: #ff4f81;
+
+      font-size: 22px;
+
+      font-weight: bold;
+    }
+
+
+    /* =========================
+       RESPONSIVE DESIGN
+    ========================== */
+
+    @media (max-width: 480px) {
+
+      .card {
+        width: 92%;
+
+        min-height: 500px;
+
+        padding: 25px 15px;
+      }
+
+
+      .card img {
+        width: 190px;
+
+        height: 190px;
+      }
+
+
+      h1 {
+        font-size: 26px;
+      }
+
+
+      button {
+        padding: 10px 22px;
+
+        font-size: 16px;
+      }
+
+
+      #yesBtn {
+        margin-right: 130px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       MAIN CARD
+  ========================== -->
+
+  <div class="card">
+
+
+    <!-- Puppy Image -->
+
+    <img
+      src="puppy.jpg"
+      alt="Cute Puppy Image"
+    />
+
+
+    <!-- Question -->
+
+    <h1>
+      Will you go on a date with me? 💖🥰
+    </h1>
+
+
+    <!-- Buttons -->
+
+    <div class="buttons">
+
+
+      <!-- Yes Button -->
+
+     <a href="/yes"> <button id="yesBtn">
+        Yes 💕
+      </button>
+      </a>
+
+
+      <!-- No Button -->
+
+      <button id="noBtn">
+        No 😜
+      </button>
+
+
+    </div>
+
+
+
+  </div>
+
+
+  <script>
+
+
+    /* =========================
+       SELECT ELEMENTS
+    ========================== */
+
+    const noBtn =
+      document.getElementById("noBtn");
+
+    const yesBtn =
+      document.getElementById("yesBtn");
+
+    const successMessage =
+      document.getElementById("successMessage");
+
+    const buttonsContainer =
+      document.querySelector(".buttons");
+
+
+    /*
+      1 cm ≈ 38 pixels
+    */
+
+    const safeDistance = 38;
+
+    const moveDistance = 38;
+
+
+    let mouseX = 0;
+
+    let mouseY = 0;
+
+
+    /*
+      Prevent repeated movement
+      in the same mouse event
+    */
+
+    let isMoving = false;
+
+
+    /* =========================
+       TRACK MOUSE
+    ========================== */
+
+    document.addEventListener(
+      "mousemove",
+
+      (event) => {
+
+        mouseX = event.clientX;
+
+        mouseY = event.clientY;
+
+        checkDistance();
+
+      }
+    );
+
+
+    /* =========================
+       CHECK DISTANCE
+    ========================== */
+
+    function checkDistance() {
+
+      const rect =
+        noBtn.getBoundingClientRect();
+
+
+      /*
+        Find the closest point
+        of No button to cursor
+      */
+
+      const closestX =
+        Math.max(
+          rect.left,
+
+          Math.min(
+            mouseX,
+
+            rect.right
+          )
+        );
+
+
+      const closestY =
+        Math.max(
+          rect.top,
+
+          Math.min(
+            mouseY,
+
+            rect.bottom
+          )
+        );
+
+
+      /*
+        Calculate distance
+      */
+
+      const distance =
+        Math.sqrt(
+
+          Math.pow(
+            mouseX - closestX,
+
+            2
+          )
+
+          +
+
+          Math.pow(
+            mouseY - closestY,
+
+            2
+          )
+
+        );
+
+
+      /*
+        Move when cursor is
+        within 1 cm
+      */
+
+      if (
+        distance <= safeDistance &&
+        !isMoving
+      ) {
+
+        moveNoButton();
+
+      }
+
+    }
+
+
+    /* =========================
+       MOVE NO BUTTON
+    ========================== */
+
+    function moveNoButton() {
+
+      isMoving = true;
+
+
+      /*
+        Get buttons container position
+      */
+
+      const containerRect =
+        buttonsContainer.getBoundingClientRect();
+
+
+      /*
+        Get current button position
+      */
+
+      const buttonRect =
+        noBtn.getBoundingClientRect();
+
+
+      const buttonWidth =
+        noBtn.offsetWidth;
+
+
+      const buttonHeight =
+        noBtn.offsetHeight;
+
+
+      /*
+        Find button center
+      */
+
+      const buttonCenterX =
+        buttonRect.left +
+        buttonRect.width / 2;
+
+
+      const buttonCenterY =
+        buttonRect.top +
+        buttonRect.height / 2;
+
+
+      /*
+        Direction from cursor
+        to button center
+
+        Cursor LEFT
+        => directionX positive
+        => button moves RIGHT
+
+        Cursor RIGHT
+        => directionX negative
+        => button moves LEFT
+
+        Cursor TOP
+        => directionY positive
+        => button moves DOWN
+
+        Cursor BOTTOM
+        => directionY negative
+        => button moves UP
+      */
+
+      let directionX =
+        buttonCenterX - mouseX;
+
+
+      let directionY =
+        buttonCenterY - mouseY;
+
+
+      /*
+        Normalize direction
+      */
+
+      const length =
+        Math.sqrt(
+
+          directionX * directionX +
+
+          directionY * directionY
+
+        );
+
+
+      if (
+        length !== 0
+      ) {
+
+        directionX =
+          directionX / length;
+
+
+        directionY =
+          directionY / length;
+
+      }
+
+
+      /*
+        Current position relative
+        to buttons container
+      */
+
+      let currentLeft =
+        buttonRect.left -
+        containerRect.left;
+
+
+      let currentTop =
+        buttonRect.top -
+        containerRect.top;
+
+
+      /*
+        Move exactly 1 cm
+      */
+
+      let newLeft =
+        currentLeft +
+        directionX *
+        moveDistance;
+
+
+      let newTop =
+        currentTop +
+        directionY *
+        moveDistance;
+
+
+      /*
+        Keep button inside
+        buttons container
+      */
+
+      const minLeft = 0;
+
+      const minTop = 0;
+
+
+      const maxLeft =
+        containerRect.width -
+        buttonWidth;
+
+
+      const maxTop =
+        containerRect.height -
+        buttonHeight;
+
+
+      newLeft =
+        Math.max(
+          minLeft,
+
+          Math.min(
+            newLeft,
+
+            maxLeft
+          )
+        );
+
+
+      newTop =
+        Math.max(
+          minTop,
+
+          Math.min(
+            newTop,
+
+            maxTop
+          )
+        );
+
+
+      /*
+        Apply new position
+      */
+
+      noBtn.style.left =
+        `${newLeft}px`;
+
+
+      noBtn.style.top =
+        `${newTop}px`;
+
+
+      noBtn.style.transform =
+        "none";
+
+
+      /*
+        Allow next movement
+      */
+
+      setTimeout(
+        () => {
+
+          isMoving = false;
+
+        },
+
+        100
+      );
+
+    }
+
+
+    /* =========================
+       MOBILE SUPPORT
+    ========================== */
+
+    noBtn.addEventListener(
+      "touchstart",
+
+      (event) => {
+
+        event.preventDefault();
+
+        moveNoButton();
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
